@@ -39,8 +39,7 @@
             this.videoViewerWF1 = new Ozeki.Media.VideoViewerWF();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.chck_box_detect = new System.Windows.Forms.CheckBox();
-            this.StartRecording = new System.Windows.Forms.Button();
-            this.StopRecording = new System.Windows.Forms.Button();
+            this.label_Motion = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -130,8 +129,6 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.StopRecording);
-            this.groupBox2.Controls.Add(this.StartRecording);
             this.groupBox2.Controls.Add(this.chck_box_detect);
             this.groupBox2.Location = new System.Drawing.Point(418, 28);
             this.groupBox2.Name = "groupBox2";
@@ -145,37 +142,25 @@
             this.chck_box_detect.AutoSize = true;
             this.chck_box_detect.Location = new System.Drawing.Point(7, 20);
             this.chck_box_detect.Name = "chck_box_detect";
-            this.chck_box_detect.Size = new System.Drawing.Size(93, 17);
+            this.chck_box_detect.Size = new System.Drawing.Size(146, 17);
             this.chck_box_detect.TabIndex = 0;
-            this.chck_box_detect.Text = "Detect Motion";
+            this.chck_box_detect.Text = "Record on Motion Detect";
             this.chck_box_detect.UseVisualStyleBackColor = true;
             this.chck_box_detect.CheckedChanged += new System.EventHandler(this.chck_box_detect_CheckedChanged);
             // 
-            // StartRecording
+            // label_Motion
             // 
-            this.StartRecording.Location = new System.Drawing.Point(7, 37);
-            this.StartRecording.Name = "StartRecording";
-            this.StartRecording.Size = new System.Drawing.Size(112, 23);
-            this.StartRecording.TabIndex = 1;
-            this.StartRecording.Text = "Start Recording";
-            this.StartRecording.UseVisualStyleBackColor = true;
-            this.StartRecording.Click += new System.EventHandler(this.StartRecording_Click);
-            // 
-            // StopRecording
-            // 
-            this.StopRecording.Location = new System.Drawing.Point(7, 66);
-            this.StopRecording.Name = "StopRecording";
-            this.StopRecording.Size = new System.Drawing.Size(112, 23);
-            this.StopRecording.TabIndex = 2;
-            this.StopRecording.Text = "Stop Recording";
-            this.StopRecording.UseVisualStyleBackColor = true;
-            this.StopRecording.Click += new System.EventHandler(this.StopRecording_Click);
+            this.label_Motion.Location = new System.Drawing.Point(415, 165);
+            this.label_Motion.Name = "label_Motion";
+            this.label_Motion.Size = new System.Drawing.Size(122, 24);
+            this.label_Motion.TabIndex = 6;
             // 
             // MotionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label_Motion);
             this.Controls.Add(this.labelState);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.videoViewerWF1);
@@ -203,7 +188,6 @@
         private Ozeki.Media.VideoViewerWF videoViewerWF1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.CheckBox chck_box_detect;
-        private System.Windows.Forms.Button StopRecording;
-        private System.Windows.Forms.Button StartRecording;
+        private System.Windows.Forms.Label label_Motion;
     }
 }

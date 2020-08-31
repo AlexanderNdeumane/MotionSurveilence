@@ -38,7 +38,9 @@
             this.labelState = new System.Windows.Forms.Label();
             this.videoViewerWF1 = new Ozeki.Media.VideoViewerWF();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chck_box_detect = new System.Windows.Forms.CheckBox();
+            this.rad_record = new System.Windows.Forms.RadioButton();
+            this.rad_motion = new System.Windows.Forms.RadioButton();
+            this.rad_normal = new System.Windows.Forms.RadioButton();
             this.label_Motion = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -129,7 +131,9 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.chck_box_detect);
+            this.groupBox2.Controls.Add(this.rad_record);
+            this.groupBox2.Controls.Add(this.rad_motion);
+            this.groupBox2.Controls.Add(this.rad_normal);
             this.groupBox2.Location = new System.Drawing.Point(418, 28);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(352, 117);
@@ -137,16 +141,41 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controllers";
             // 
-            // chck_box_detect
+            // rad_record
             // 
-            this.chck_box_detect.AutoSize = true;
-            this.chck_box_detect.Location = new System.Drawing.Point(7, 20);
-            this.chck_box_detect.Name = "chck_box_detect";
-            this.chck_box_detect.Size = new System.Drawing.Size(146, 17);
-            this.chck_box_detect.TabIndex = 0;
-            this.chck_box_detect.Text = "Record on Motion Detect";
-            this.chck_box_detect.UseVisualStyleBackColor = true;
-            this.chck_box_detect.CheckedChanged += new System.EventHandler(this.chck_box_detect_CheckedChanged);
+            this.rad_record.AutoSize = true;
+            this.rad_record.Location = new System.Drawing.Point(7, 74);
+            this.rad_record.Name = "rad_record";
+            this.rad_record.Size = new System.Drawing.Size(60, 17);
+            this.rad_record.TabIndex = 2;
+            this.rad_record.TabStop = true;
+            this.rad_record.Text = "Record";
+            this.rad_record.UseVisualStyleBackColor = true;
+            this.rad_record.CheckedChanged += new System.EventHandler(this.rad_record_CheckedChanged);
+            // 
+            // rad_motion
+            // 
+            this.rad_motion.AutoSize = true;
+            this.rad_motion.Location = new System.Drawing.Point(6, 51);
+            this.rad_motion.Name = "rad_motion";
+            this.rad_motion.Size = new System.Drawing.Size(57, 17);
+            this.rad_motion.TabIndex = 1;
+            this.rad_motion.TabStop = true;
+            this.rad_motion.Text = "Motion";
+            this.rad_motion.UseVisualStyleBackColor = true;
+            this.rad_motion.CheckedChanged += new System.EventHandler(this.rad_motion_CheckedChanged);
+            // 
+            // rad_normal
+            // 
+            this.rad_normal.AutoSize = true;
+            this.rad_normal.Location = new System.Drawing.Point(6, 28);
+            this.rad_normal.Name = "rad_normal";
+            this.rad_normal.Size = new System.Drawing.Size(58, 17);
+            this.rad_normal.TabIndex = 0;
+            this.rad_normal.TabStop = true;
+            this.rad_normal.Text = "Normal";
+            this.rad_normal.UseVisualStyleBackColor = true;
+            this.rad_normal.CheckedChanged += new System.EventHandler(this.rad_normal_CheckedChanged);
             // 
             // label_Motion
             // 
@@ -187,7 +216,9 @@
         private System.Windows.Forms.Label label1;
         private Ozeki.Media.VideoViewerWF videoViewerWF1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.CheckBox chck_box_detect;
         private System.Windows.Forms.Label label_Motion;
+        private System.Windows.Forms.RadioButton rad_record;
+        private System.Windows.Forms.RadioButton rad_motion;
+        private System.Windows.Forms.RadioButton rad_normal;
     }
 }

@@ -111,29 +111,7 @@ namespace MotionSurveilence
             _mediaConnector.Disconnect(_webCamera.VideoChannel, _imageProvider);
             _webCamera = null;
         }
-        //
-        //Check box. Shows motion detection and records when checked and 
-        //does not show motion detection when unchecked
-        //
-        private void chck_box_detect_CheckedChanged(object sender, EventArgs e)
-        {
-            if (chck_box_detect.Checked)
-            {
-                _motionDetector.HighlightMotion = HighlightMotion.Highlight;
-                _motionDetector.MotionColor = MotionColor.Red;
-                _motionDetector.MotionDetection += _motionDetector_MotionDetection;
-                _motionDetector.Start();
-                label_Motion.Text = "Motion detector started";
-            }
-            else
-            {
-                _motionDetector.MotionDetection -= _motionDetector_MotionDetection;
-                _motionDetector.Stop();
-                label_Motion.Text = "Motion detector stopped";
-                StopRecording();
-            }
-           
-        }
+        
         //
         //Recording function
         //
@@ -176,13 +154,61 @@ namespace MotionSurveilence
             {
                 case true:
                     InvokeGuiThread(() => label_Motion.Text = "Motion detected");
-                    StartRecording();
                     break;
 
                 case false:
                     InvokeGuiThread(() => label_Motion.Text = "Motion ended");
-                    StopRecording();
                     break;
+            }
+        }
+        //
+        //
+        //
+        private void rad_normal_CheckedChanged(object sender, EventArgs e)
+        {
+            
+        }
+        //
+        //
+        //
+        private void rad_motion_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rad_motion.Checked)
+            {
+                _motionDetector.HighlightMotion = HighlightMotion.Highlight;
+                _motionDetector.MotionColor = MotionColor.Red;
+                _motionDetector.MotionDetection += _motionDetector_MotionDetection;
+                _motionDetector.Start();
+                label_Motion.Text = "Motion detector started";
+            }
+            else
+            {
+                _motionDetector.MotionDetection -= _motionDetector_MotionDetection;
+                _motionDetector.Stop();
+                label_Motion.Text = "Motion detector stopped";
+            }
+            
+        }
+        //
+        //
+        //
+        private void rad_record_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rad_record.Checked)
+            {
+                _motionDetector.HighlightMotion = HighlightMotion.Highlight;
+                _motionDetector.MotionColor = MotionColor.Red;
+                _motionDetector.MotionDetection += _motionDetector_MotionDetection;
+                _motionDetector.Start();
+                StartRecording();
+                label_Motion.Text = "Motion record detector started";
+            }
+            else
+            {
+                _motionDetector.MotionDetection -= _motionDetector_MotionDetection;
+                _motionDetector.Stop();
+                label_Motion.Text = "Motion record detector stopped";
+                StopRecording();
             }
         }
     }

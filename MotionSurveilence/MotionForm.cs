@@ -154,45 +154,44 @@ namespace MotionSurveilence
         //
         private void _motionDetector_MotionDetection(object sender, MotionDetectionEvent e)
         {
-            switch (e.Detection)
+            switch(e.Detection)
             {
                 case true:
-                    InvokeGuiThread(() => label_Motion.Text = "Motion detected");
+                    InvokeGuiThread(() => label_Motion.Text = "Detecting motion");
                     break;
-
                 case false:
-                    InvokeGuiThread(() => label_Motion.Text = "Motion ended");
+                    InvokeGuiThread(() => label_Motion.Text = "No motion detected");
                     break;
             }
         }
         //
-        //
+        //Method detects motion in video for recording
         //
         private void _motionRecorder_MotionDetection(object sender, MotionDetectionEvent e)
         {
-            switch (e.Detection)
+            if(e.Detection == true)
             {
-                case true:
-                    InvokeGuiThread(() => label_Motion.Text = "Motion recorder started");
-                    StartRecording();
-                    break;
-
-                case false:
-                    InvokeGuiThread(() => label_Motion.Text = "Motion recorder stopped");
-                    StopRecording();
-                    break;
+                InvokeGuiThread(() => label_Motion.Text = "Motion recorder started");
+                StartRecording();
             }
+            else
+            {
+                InvokeGuiThread(() => label_Motion.Text = "Motion recorder stopped");
+                StopRecording();
+            }
+
         }
         //
-        //
+        //When radio normal radio button is checked, application
+        //streams webcam footage
         //
         private void rad_normal_CheckedChanged(object sender, EventArgs e)
         {
-            
-                
+             
         }
         //
-        //
+        //when record is checked, application streams and records
+        //webcam footage
         //
         private void rad_rec_normal_CheckedChanged(object sender, EventArgs e)
         {
@@ -205,9 +204,9 @@ namespace MotionSurveilence
                 StopRecording();
             }
         }
-
         //
-        //
+        //when detect motion is checked, application streams
+        //webcam footage and detects motion
         //
         private void rad_motion_CheckedChanged(object sender, EventArgs e)
         {
@@ -222,13 +221,31 @@ namespace MotionSurveilence
             
         }
         //
+        //when record and detect motion is checked, application
+        //streams webcam footage, detects motion and records
         //
+        private void rad_rec_AndDet_motion_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rad_rec_AndDet_motion.Checked)
+            {
+                StartRecording();
+                StartMotionDetection();
+            }
+            else
+            {
+                StopRecording();
+                StopMotionDetection();
+            }
+        }
         //
-        private void rad_rec_motion_CheckedChanged(object sender, EventArgs e)
+        //when record on motion detection is checked, application
+        //streams webcam footage and records when motion is detected
+        //
+        private void rad_rec_OnMotion_CheckedChanged(object sender, EventArgs e)
         {
             _mediaConnector.Connect(_webCamera.VideoChannel, _motionRecorder);
             _mediaConnector.Connect(_motionRecorder, _imageProvider);
-            if (rad_rec_motion.Checked)
+            if (rad_rec_OnMotion.Checked)
             {
                 _motionRecorder.HighlightMotion = HighlightMotion.Highlight;
                 _motionRecorder.MotionColor = MotionColor.Blue;
@@ -242,7 +259,7 @@ namespace MotionSurveilence
             }
         }
         //
-        //
+        //Method starts motion detection engine
         //
         public void StartMotionDetection()
         {
@@ -253,7 +270,7 @@ namespace MotionSurveilence
             label_Motion.Text = "Motion detector started";
         }
         //
-        //
+        //Method stops motion detection engine
         //
         public void StopMotionDetection()
         {
@@ -261,6 +278,5 @@ namespace MotionSurveilence
             _motionDetector.Stop();
             label_Motion.Text = "Motion detector stopped";
         }
-
     }
 }

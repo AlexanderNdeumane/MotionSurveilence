@@ -38,8 +38,9 @@
             this.labelState = new System.Windows.Forms.Label();
             this.videoViewerWF1 = new Ozeki.Media.VideoViewerWF();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.rad_rec_AndDet_motion = new System.Windows.Forms.RadioButton();
             this.rad_rec_normal = new System.Windows.Forms.RadioButton();
-            this.rad_rec_motion = new System.Windows.Forms.RadioButton();
+            this.rad_rec_OnMotion = new System.Windows.Forms.RadioButton();
             this.rad_motion = new System.Windows.Forms.RadioButton();
             this.rad_normal = new System.Windows.Forms.RadioButton();
             this.label_Motion = new System.Windows.Forms.Label();
@@ -132,16 +133,29 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.rad_rec_AndDet_motion);
             this.groupBox2.Controls.Add(this.rad_rec_normal);
-            this.groupBox2.Controls.Add(this.rad_rec_motion);
+            this.groupBox2.Controls.Add(this.rad_rec_OnMotion);
             this.groupBox2.Controls.Add(this.rad_motion);
             this.groupBox2.Controls.Add(this.rad_normal);
             this.groupBox2.Location = new System.Drawing.Point(418, 28);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(352, 117);
+            this.groupBox2.Size = new System.Drawing.Size(352, 149);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controllers";
+            // 
+            // rad_rec_AndDet_motion
+            // 
+            this.rad_rec_AndDet_motion.AutoSize = true;
+            this.rad_rec_AndDet_motion.Location = new System.Drawing.Point(6, 87);
+            this.rad_rec_AndDet_motion.Name = "rad_rec_AndDet_motion";
+            this.rad_rec_AndDet_motion.Size = new System.Drawing.Size(151, 17);
+            this.rad_rec_AndDet_motion.TabIndex = 4;
+            this.rad_rec_AndDet_motion.TabStop = true;
+            this.rad_rec_AndDet_motion.Text = "Record and Detect Motion";
+            this.rad_rec_AndDet_motion.UseVisualStyleBackColor = true;
+            this.rad_rec_AndDet_motion.CheckedChanged += new System.EventHandler(this.rad_rec_AndDet_motion_CheckedChanged);
             // 
             // rad_rec_normal
             // 
@@ -155,17 +169,17 @@
             this.rad_rec_normal.UseVisualStyleBackColor = true;
             this.rad_rec_normal.CheckedChanged += new System.EventHandler(this.rad_rec_normal_CheckedChanged);
             // 
-            // rad_rec_motion
+            // rad_rec_OnMotion
             // 
-            this.rad_rec_motion.AutoSize = true;
-            this.rad_rec_motion.Location = new System.Drawing.Point(7, 87);
-            this.rad_rec_motion.Name = "rad_rec_motion";
-            this.rad_rec_motion.Size = new System.Drawing.Size(95, 17);
-            this.rad_rec_motion.TabIndex = 2;
-            this.rad_rec_motion.TabStop = true;
-            this.rad_rec_motion.Text = "Record Motion";
-            this.rad_rec_motion.UseVisualStyleBackColor = true;
-            this.rad_rec_motion.CheckedChanged += new System.EventHandler(this.rad_rec_motion_CheckedChanged);
+            this.rad_rec_OnMotion.AutoSize = true;
+            this.rad_rec_OnMotion.Location = new System.Drawing.Point(6, 110);
+            this.rad_rec_OnMotion.Name = "rad_rec_OnMotion";
+            this.rad_rec_OnMotion.Size = new System.Drawing.Size(159, 17);
+            this.rad_rec_OnMotion.TabIndex = 2;
+            this.rad_rec_OnMotion.TabStop = true;
+            this.rad_rec_OnMotion.Text = "Record on Motion Detection";
+            this.rad_rec_OnMotion.UseVisualStyleBackColor = true;
+            this.rad_rec_OnMotion.CheckedChanged += new System.EventHandler(this.rad_rec_OnMotion_CheckedChanged);
             // 
             // rad_motion
             // 
@@ -175,7 +189,7 @@
             this.rad_motion.Size = new System.Drawing.Size(92, 17);
             this.rad_motion.TabIndex = 1;
             this.rad_motion.TabStop = true;
-            this.rad_motion.Text = "Motion Detect";
+            this.rad_motion.Text = "Detect Motion";
             this.rad_motion.UseVisualStyleBackColor = true;
             this.rad_motion.CheckedChanged += new System.EventHandler(this.rad_motion_CheckedChanged);
             // 
@@ -233,9 +247,10 @@
         private Ozeki.Media.VideoViewerWF videoViewerWF1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label_Motion;
-        private System.Windows.Forms.RadioButton rad_rec_motion;
+        private System.Windows.Forms.RadioButton rad_rec_OnMotion;
         private System.Windows.Forms.RadioButton rad_motion;
         private System.Windows.Forms.RadioButton rad_normal;
         private System.Windows.Forms.RadioButton rad_rec_normal;
+        private System.Windows.Forms.RadioButton rad_rec_AndDet_motion;
     }
 }

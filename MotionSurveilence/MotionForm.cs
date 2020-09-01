@@ -14,6 +14,7 @@ namespace MotionSurveilence
         private MPEG4Recorder _recorder;
         private CameraURLBuilderWF _myCameraUrlBuilder;
         private MotionDetector _motionDetector;
+        private MotionDetector _motionRecorder;
         //
         //Method that initiates the program
         //
@@ -21,7 +22,9 @@ namespace MotionSurveilence
         {
             InitializeComponent();
 
+            _motionRecorder = new MotionDetector();
             _motionDetector = new MotionDetector();
+            
 
             _imageProvider = new Ozeki.Media.DrawingImageProvider();
             _mediaConnector = new Ozeki.Media.MediaConnector();
@@ -145,6 +148,7 @@ namespace MotionSurveilence
             _mediaConnector.Disconnect(_webCamera.VideoChannel, _recorder.VideoRecorder);
             _recorder.Multiplex();
         }
+        
         //
         //Method that detects motion in the video
         //
@@ -164,10 +168,44 @@ namespace MotionSurveilence
         //
         //
         //
+        private void _motionRecorder_MotionDetection(object sender, MotionDetectionEvent e)
+        {
+            switch (e.Detection)
+            {
+                case true:
+                    InvokeGuiThread(() => label_Motion.Text = "Motion recorder started");
+                    StartRecording();
+                    break;
+
+                case false:
+                    InvokeGuiThread(() => label_Motion.Text = "Motion recorder stopped");
+                    StopRecording();
+                    break;
+            }
+        }
+        //
+        //
+        //
         private void rad_normal_CheckedChanged(object sender, EventArgs e)
         {
             
+                
         }
+        //
+        //
+        //
+        private void rad_rec_normal_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rad_rec_normal.Checked)
+            {
+                StartRecording();
+            }
+            else
+            {
+                StopRecording();
+            }
+        }
+
         //
         //
         //
@@ -175,41 +213,54 @@ namespace MotionSurveilence
         {
             if (rad_motion.Checked)
             {
-                _motionDetector.HighlightMotion = HighlightMotion.Highlight;
-                _motionDetector.MotionColor = MotionColor.Red;
-                _motionDetector.MotionDetection += _motionDetector_MotionDetection;
-                _motionDetector.Start();
-                label_Motion.Text = "Motion detector started";
+                StartMotionDetection();
             }
             else
             {
-                _motionDetector.MotionDetection -= _motionDetector_MotionDetection;
-                _motionDetector.Stop();
-                label_Motion.Text = "Motion detector stopped";
+                StopMotionDetection();
             }
             
         }
         //
         //
         //
-        private void rad_record_CheckedChanged(object sender, EventArgs e)
+        private void rad_rec_motion_CheckedChanged(object sender, EventArgs e)
         {
-            if (rad_record.Checked)
+            _mediaConnector.Connect(_webCamera.VideoChannel, _motionRecorder);
+            _mediaConnector.Connect(_motionRecorder, _imageProvider);
+            if (rad_rec_motion.Checked)
             {
-                _motionDetector.HighlightMotion = HighlightMotion.Highlight;
-                _motionDetector.MotionColor = MotionColor.Red;
-                _motionDetector.MotionDetection += _motionDetector_MotionDetection;
-                _motionDetector.Start();
-                StartRecording();
-                label_Motion.Text = "Motion record detector started";
+                _motionRecorder.HighlightMotion = HighlightMotion.Highlight;
+                _motionRecorder.MotionColor = MotionColor.Blue;
+                _motionRecorder.MotionDetection += _motionRecorder_MotionDetection;
+                _motionRecorder.Start();
             }
             else
             {
-                _motionDetector.MotionDetection -= _motionDetector_MotionDetection;
-                _motionDetector.Stop();
-                label_Motion.Text = "Motion record detector stopped";
-                StopRecording();
+                _motionRecorder.MotionDetection -= _motionRecorder_MotionDetection;
+                _motionRecorder.Stop();
             }
         }
+        //
+        //
+        //
+        public void StartMotionDetection()
+        {
+            _motionDetector.HighlightMotion = HighlightMotion.Highlight;
+            _motionDetector.MotionColor = MotionColor.Red;
+            _motionDetector.MotionDetection += _motionDetector_MotionDetection;
+            _motionDetector.Start();
+            label_Motion.Text = "Motion detector started";
+        }
+        //
+        //
+        //
+        public void StopMotionDetection()
+        {
+            _motionDetector.MotionDetection -= _motionDetector_MotionDetection;
+            _motionDetector.Stop();
+            label_Motion.Text = "Motion detector stopped";
+        }
+
     }
 }

@@ -3,6 +3,8 @@ using System;
 using System.Windows.Forms;
 using Ozeki.Vision;
 using Ozeki.Media;
+using System.Reactive;
+using Ozeki.Network;
 
 namespace MotionSurveilence
 {
@@ -15,6 +17,8 @@ namespace MotionSurveilence
         private CameraURLBuilderWF _myCameraUrlBuilder;
         private MotionDetector _motionDetector;
         private MotionDetector _motionRecorder;
+        private MyServer _server;
+
         //
         //Method that initiates the program
         //
@@ -24,7 +28,9 @@ namespace MotionSurveilence
 
             _motionRecorder = new MotionDetector();
             _motionDetector = new MotionDetector();
-            
+
+            _server = new MyServer();
+            _server.ClientCountChanged += _server_OnClientCountChanged;
 
             _imageProvider = new Ozeki.Media.DrawingImageProvider();
             _mediaConnector = new Ozeki.Media.MediaConnector();
@@ -278,5 +284,78 @@ namespace MotionSurveilence
             _motionDetector.Stop();
             label_Motion.Text = "Motion detector stopped";
         }
+        //
+        //method starts the streaming server when
+        //start button is clicked
+        //
+        private void buttonStartServer_Click(object sender, EventArgs e)
+        {
+            var ip = NetworkAddressHelper.GetLocalIP();
+            txtIp.Text = ip.ToString();
+            var port = int.Parse(txtPort.Text);
+            _server.VideoSender = _webCamera.VideoChannel;
+
+            _server.Start();
+
+            var url = "rtsp://" + ip.ToString() + ":" + port;
+
+            var config = new OnvifConfig(8088, ip.ToString(), true, url);
+
+            _server.SetOnvifListenAddress(config);
+
+            _server.SetListenAddress(ip.ToString(), port);
+        }
+        //
+        //method stops the streaming server when stop button
+        //is clicked
+        //
+
+        private void buttonStopServer_Click(object sender, EventArgs e)
+        {
+            _server.ClientCountChanged -= _server_OnClientCountChanged;
+            _server.Stop();
+        }
+        //
+        //
+        //
+        void _server_ServerStateChanged(object sender, CameraServerStateChangedArgs e)
+        {
+            InvokeGuiThread(() =>
+            {
+                lblState.Text = e.State.ToString();
+            });
+        }
+        //
+        //
+        //
+        void _server_OnClientCountChanged(object sender, EventArgs e)
+        {
+            InvokeGuiThread(() =>
+            {
+                ConnectedClientsList.Items.Clear();
+
+                foreach (var client in _server.ConnectedClients)
+                    ConnectedClientsList.Items.Add("End point: " +
+                        client.TransportInfo.RemoteEndPoint);
+            });
+        }
+        //
+        //
+        //
+        private void Streaming()
+        {
+            buttonConnect.Enabled = false;
+            buttonDisconnect.Enabled = true;
+        }
+        //
+        //
+        //
+        private void Disconnect()
+        {
+            buttonConnect.Enabled = true;
+            buttonDisconnect.Enabled = false;
+        }
+        
     }
+        
 }

@@ -44,8 +44,19 @@
             this.rad_motion = new System.Windows.Forms.RadioButton();
             this.rad_normal = new System.Windows.Forms.RadioButton();
             this.label_Motion = new System.Windows.Forms.Label();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.buttonStartServer = new System.Windows.Forms.Button();
+            this.buttonStopServer = new System.Windows.Forms.Button();
+            this.txtIp = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtPort = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.lblState = new System.Windows.Forms.Label();
+            this.ConnectedClientsList = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -214,11 +225,109 @@
             this.label_Motion.Size = new System.Drawing.Size(122, 24);
             this.label_Motion.TabIndex = 6;
             // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.ConnectedClientsList);
+            this.groupBox3.Controls.Add(this.lblState);
+            this.groupBox3.Controls.Add(this.label4);
+            this.groupBox3.Controls.Add(this.label3);
+            this.groupBox3.Controls.Add(this.txtPort);
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.txtIp);
+            this.groupBox3.Controls.Add(this.buttonStopServer);
+            this.groupBox3.Controls.Add(this.buttonStartServer);
+            this.groupBox3.Location = new System.Drawing.Point(418, 192);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(352, 149);
+            this.groupBox3.TabIndex = 7;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Streaming";
+            // 
+            // buttonStartServer
+            // 
+            this.buttonStartServer.Location = new System.Drawing.Point(7, 120);
+            this.buttonStartServer.Name = "buttonStartServer";
+            this.buttonStartServer.Size = new System.Drawing.Size(75, 23);
+            this.buttonStartServer.TabIndex = 4;
+            this.buttonStartServer.Text = "Start";
+            this.buttonStartServer.UseVisualStyleBackColor = true;
+            this.buttonStartServer.Click += new System.EventHandler(this.buttonStartServer_Click);
+            // 
+            // buttonStopServer
+            // 
+            this.buttonStopServer.Location = new System.Drawing.Point(88, 120);
+            this.buttonStopServer.Name = "buttonStopServer";
+            this.buttonStopServer.Size = new System.Drawing.Size(75, 23);
+            this.buttonStopServer.TabIndex = 5;
+            this.buttonStopServer.Text = "Stop";
+            this.buttonStopServer.UseVisualStyleBackColor = true;
+            this.buttonStopServer.Click += new System.EventHandler(this.buttonStopServer_Click);
+            // 
+            // txtIp
+            // 
+            this.txtIp.Location = new System.Drawing.Point(54, 23);
+            this.txtIp.Name = "txtIp";
+            this.txtIp.Size = new System.Drawing.Size(111, 20);
+            this.txtIp.TabIndex = 6;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 26);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Address";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 61);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(26, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "Port";
+            // 
+            // txtPort
+            // 
+            this.txtPort.Location = new System.Drawing.Point(54, 58);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.Size = new System.Drawing.Size(111, 20);
+            this.txtPort.TabIndex = 8;
+            this.txtPort.Text = "554";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 89);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "State";
+            // 
+            // lblState
+            // 
+            this.lblState.Location = new System.Drawing.Point(54, 81);
+            this.lblState.Name = "lblState";
+            this.lblState.Size = new System.Drawing.Size(109, 21);
+            this.lblState.TabIndex = 11;
+            this.lblState.UseMnemonic = false;
+            // 
+            // ConnectedClientsList
+            // 
+            this.ConnectedClientsList.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.ConnectedClientsList.FormattingEnabled = true;
+            this.ConnectedClientsList.Location = new System.Drawing.Point(171, 23);
+            this.ConnectedClientsList.Name = "ConnectedClientsList";
+            this.ConnectedClientsList.Size = new System.Drawing.Size(175, 121);
+            this.ConnectedClientsList.TabIndex = 5;
+            // 
             // MotionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label_Motion);
             this.Controls.Add(this.labelState);
             this.Controls.Add(this.groupBox2);
@@ -230,6 +339,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,5 +363,15 @@
         private System.Windows.Forms.RadioButton rad_normal;
         private System.Windows.Forms.RadioButton rad_rec_normal;
         private System.Windows.Forms.RadioButton rad_rec_AndDet_motion;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button buttonStopServer;
+        private System.Windows.Forms.Button buttonStartServer;
+        private System.Windows.Forms.Label lblState;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtPort;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtIp;
+        private System.Windows.Forms.ListBox ConnectedClientsList;
     }
 }

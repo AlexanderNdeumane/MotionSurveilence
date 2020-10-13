@@ -86,7 +86,7 @@ namespace MotionSurveilence
                 return;
 
             cameraUrl.Text = _myCameraUrlBuilder.CameraURL;
-
+            //enable connect button and disable compose button
             buttonConnect.Enabled = true;
         }
         //
@@ -94,7 +94,7 @@ namespace MotionSurveilence
         //
         private void buttonConnect_Click(object sender, EventArgs e)
         {
-            
+            if(cameraUrl.Text != "")
             {
                 if (_webCamera != null)
                 {
@@ -114,19 +114,59 @@ namespace MotionSurveilence
                 _webCamera.Start();
 
                 videoViewerWF1.Start();
+                buttonCompose.Enabled = false;
+                enableButtons();
             }
+            else
+            {
+                //give error
+            }
+                
+            
         }
         //
         //Disconnects from the camera
         //
         private void buttonDisconnect_Click(object sender, EventArgs e)
         {
-            videoViewerWF1.Stop();
-            _webCamera.Stop();
-            _mediaConnector.Disconnect(_webCamera.VideoChannel, _imageProvider);
-            _webCamera = null;
+            if(_webCamera != null)
+            {
+                videoViewerWF1.Stop();
+                _webCamera.Stop();
+                _mediaConnector.Disconnect(_webCamera.VideoChannel, _imageProvider);
+                _webCamera = null;
+                buttonCompose.Enabled = true;
+                videoViewerWF1.ClearScreen();
+                disableButtons();
+            }
         }
         
+        //
+        //enable buttons when connected to a camera
+        //
+        public void enableButtons()
+        {
+            rad_normal.Enabled = true;
+            rad_rec_normal.Enabled = true;
+            rad_motion.Enabled = true;
+            rad_rec_AndDet_motion.Enabled = true;
+            rad_rec_OnMotion.Enabled = true;
+            buttonStartServer.Enabled = true;
+        }
+        //
+        //disable buttons when disconnected from a camera
+        //
+        public void disableButtons()
+        {
+            rad_normal.Enabled = false;
+            rad_rec_normal.Enabled = false;
+            rad_motion.Enabled = false;
+            rad_rec_AndDet_motion.Enabled = false;
+            rad_rec_OnMotion.Enabled = false;
+            buttonStartServer.Enabled = false;
+            buttonStopServer.Enabled = false;
+        }
+
         //
         //Recording function
         //
@@ -256,10 +296,11 @@ namespace MotionSurveilence
         //
         private void rad_rec_OnMotion_CheckedChanged(object sender, EventArgs e)
         {
-            _mediaConnector.Connect(_webCamera.VideoChannel, _motionRecorder);
-            _mediaConnector.Connect(_motionRecorder, _imageProvider);
+
             if (rad_rec_OnMotion.Checked)
             {
+                _mediaConnector.Connect(_webCamera.VideoChannel, _motionRecorder);
+                _mediaConnector.Connect(_motionRecorder, _imageProvider);
                 _motionRecorder.HighlightMotion = HighlightMotion.Highlight;
                 _motionRecorder.MotionColor = MotionColor.Blue;
                 _motionRecorder.MotionDetection += _motionRecorder_MotionDetection;
@@ -267,8 +308,11 @@ namespace MotionSurveilence
             }
             else
             {
+                _mediaConnector.Disconnect(_webCamera.VideoChannel, _motionRecorder);
+                _mediaConnector.Disconnect(_motionRecorder, _imageProvider);
                 _motionRecorder.MotionDetection -= _motionRecorder_MotionDetection;
                 _motionRecorder.Stop();
+                
             }
         }
         //
@@ -298,8 +342,9 @@ namespace MotionSurveilence
         private void buttonStartServer_Click(object sender, EventArgs e)
         {
             var ip = NetworkAddressHelper.GetLocalIP();
-            txtIp.Text = ip.ToString();
-            var port = int.Parse(txtPort.Text);
+            
+            var port = 554;
+            
             _server.VideoSender = _webCamera.VideoChannel;
 
             _server.Start();
@@ -308,9 +353,17 @@ namespace MotionSurveilence
 
             var config = new OnvifConfig(8088, ip.ToString(), true, url);
 
+            lbl_hint.Visible = true;
+            lbl_endpoint.Text = url;
+
             _server.SetOnvifListenAddress(config);
 
             _server.SetListenAddress(ip.ToString(), port);
+
+            lbl_endpoint.Visible = true;
+
+            buttonStartServer.Enabled = false;
+            buttonStopServer.Enabled = true;
         }
         //
         //method stops the streaming server when stop button
@@ -321,6 +374,12 @@ namespace MotionSurveilence
         {
             _server.ClientCountChanged -= _server_OnClientCountChanged;
             _server.Stop();
+
+            lbl_endpoint.Visible = false;
+            lbl_hint.Visible = false;
+
+            buttonStartServer.Enabled = true;
+            buttonStopServer.Enabled = false;
         }
         //
         //
@@ -345,22 +404,6 @@ namespace MotionSurveilence
                     ConnectedClientsList.Items.Add("End point: " +
                         client.TransportInfo.RemoteEndPoint);
             });
-        }
-        //
-        //
-        //
-        private void Streaming()
-        {
-            buttonConnect.Enabled = false;
-            buttonDisconnect.Enabled = true;
-        }
-        //
-        //
-        //
-        private void Disconnect()
-        {
-            buttonConnect.Enabled = true;
-            buttonDisconnect.Enabled = false;
         }
         //
         //

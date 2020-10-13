@@ -45,15 +45,14 @@
             this.rad_normal = new System.Windows.Forms.RadioButton();
             this.label_Motion = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.buttonStartServer = new System.Windows.Forms.Button();
-            this.buttonStopServer = new System.Windows.Forms.Button();
-            this.txtIp = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtPort = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.lblState = new System.Windows.Forms.Label();
+            this.lbl_hint = new System.Windows.Forms.Label();
+            this.lbl_endpoint = new System.Windows.Forms.Label();
             this.ConnectedClientsList = new System.Windows.Forms.ListBox();
+            this.lblState = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.buttonStopServer = new System.Windows.Forms.Button();
+            this.buttonStartServer = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -75,6 +74,7 @@
             // 
             // buttonDisconnect
             // 
+            this.buttonDisconnect.Enabled = false;
             this.buttonDisconnect.Location = new System.Drawing.Point(130, 66);
             this.buttonDisconnect.Name = "buttonDisconnect";
             this.buttonDisconnect.Size = new System.Drawing.Size(75, 23);
@@ -85,6 +85,7 @@
             // 
             // buttonConnect
             // 
+            this.buttonConnect.Enabled = false;
             this.buttonConnect.Location = new System.Drawing.Point(9, 66);
             this.buttonConnect.Name = "buttonConnect";
             this.buttonConnect.Size = new System.Drawing.Size(75, 23);
@@ -105,8 +106,10 @@
             // 
             // cameraUrl
             // 
+            this.cameraUrl.Enabled = false;
             this.cameraUrl.Location = new System.Drawing.Point(9, 40);
             this.cameraUrl.Name = "cameraUrl";
+            this.cameraUrl.ReadOnly = true;
             this.cameraUrl.Size = new System.Drawing.Size(196, 20);
             this.cameraUrl.TabIndex = 1;
             // 
@@ -115,9 +118,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(6, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.Size = new System.Drawing.Size(71, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Camre URL:";
+            this.label1.Text = "Camera URL:";
             // 
             // labelState
             // 
@@ -159,6 +162,7 @@
             // rad_rec_AndDet_motion
             // 
             this.rad_rec_AndDet_motion.AutoSize = true;
+            this.rad_rec_AndDet_motion.Enabled = false;
             this.rad_rec_AndDet_motion.Location = new System.Drawing.Point(6, 87);
             this.rad_rec_AndDet_motion.Name = "rad_rec_AndDet_motion";
             this.rad_rec_AndDet_motion.Size = new System.Drawing.Size(151, 17);
@@ -171,6 +175,7 @@
             // rad_rec_normal
             // 
             this.rad_rec_normal.AutoSize = true;
+            this.rad_rec_normal.Enabled = false;
             this.rad_rec_normal.Location = new System.Drawing.Point(6, 43);
             this.rad_rec_normal.Name = "rad_rec_normal";
             this.rad_rec_normal.Size = new System.Drawing.Size(60, 17);
@@ -183,6 +188,7 @@
             // rad_rec_OnMotion
             // 
             this.rad_rec_OnMotion.AutoSize = true;
+            this.rad_rec_OnMotion.Enabled = false;
             this.rad_rec_OnMotion.Location = new System.Drawing.Point(6, 110);
             this.rad_rec_OnMotion.Name = "rad_rec_OnMotion";
             this.rad_rec_OnMotion.Size = new System.Drawing.Size(159, 17);
@@ -195,6 +201,7 @@
             // rad_motion
             // 
             this.rad_motion.AutoSize = true;
+            this.rad_motion.Enabled = false;
             this.rad_motion.Location = new System.Drawing.Point(6, 64);
             this.rad_motion.Name = "rad_motion";
             this.rad_motion.Size = new System.Drawing.Size(92, 17);
@@ -208,12 +215,13 @@
             // 
             this.rad_normal.AutoSize = true;
             this.rad_normal.Checked = true;
+            this.rad_normal.Enabled = false;
             this.rad_normal.Location = new System.Drawing.Point(7, 19);
             this.rad_normal.Name = "rad_normal";
-            this.rad_normal.Size = new System.Drawing.Size(62, 17);
+            this.rad_normal.Size = new System.Drawing.Size(80, 17);
             this.rad_normal.TabIndex = 0;
             this.rad_normal.TabStop = true;
-            this.rad_normal.Text = "Nothing";
+            this.rad_normal.Text = "Stream only";
             this.rad_normal.UseMnemonic = false;
             this.rad_normal.UseVisualStyleBackColor = true;
             this.rad_normal.CheckedChanged += new System.EventHandler(this.rad_normal_CheckedChanged);
@@ -227,13 +235,12 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label2);
+            this.groupBox3.Controls.Add(this.lbl_hint);
+            this.groupBox3.Controls.Add(this.lbl_endpoint);
             this.groupBox3.Controls.Add(this.ConnectedClientsList);
             this.groupBox3.Controls.Add(this.lblState);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Controls.Add(this.txtPort);
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.txtIp);
             this.groupBox3.Controls.Add(this.buttonStopServer);
             this.groupBox3.Controls.Add(this.buttonStartServer);
             this.groupBox3.Location = new System.Drawing.Point(418, 192);
@@ -243,67 +250,33 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Streaming";
             // 
-            // buttonStartServer
+            // lbl_hint
             // 
-            this.buttonStartServer.Location = new System.Drawing.Point(7, 120);
-            this.buttonStartServer.Name = "buttonStartServer";
-            this.buttonStartServer.Size = new System.Drawing.Size(75, 23);
-            this.buttonStartServer.TabIndex = 4;
-            this.buttonStartServer.Text = "Start";
-            this.buttonStartServer.UseVisualStyleBackColor = true;
-            this.buttonStartServer.Click += new System.EventHandler(this.buttonStartServer_Click);
+            this.lbl_hint.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_hint.Location = new System.Drawing.Point(7, 19);
+            this.lbl_hint.Name = "lbl_hint";
+            this.lbl_hint.Size = new System.Drawing.Size(150, 17);
+            this.lbl_hint.TabIndex = 13;
+            this.lbl_hint.Text = "Endpoint:";
+            this.lbl_hint.Visible = false;
             // 
-            // buttonStopServer
+            // lbl_endpoint
             // 
-            this.buttonStopServer.Location = new System.Drawing.Point(88, 120);
-            this.buttonStopServer.Name = "buttonStopServer";
-            this.buttonStopServer.Size = new System.Drawing.Size(75, 23);
-            this.buttonStopServer.TabIndex = 5;
-            this.buttonStopServer.Text = "Stop";
-            this.buttonStopServer.UseVisualStyleBackColor = true;
-            this.buttonStopServer.Click += new System.EventHandler(this.buttonStopServer_Click);
+            this.lbl_endpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_endpoint.Location = new System.Drawing.Point(7, 36);
+            this.lbl_endpoint.Name = "lbl_endpoint";
+            this.lbl_endpoint.Size = new System.Drawing.Size(166, 16);
+            this.lbl_endpoint.TabIndex = 12;
+            this.lbl_endpoint.Visible = false;
             // 
-            // txtIp
+            // ConnectedClientsList
             // 
-            this.txtIp.Location = new System.Drawing.Point(54, 23);
-            this.txtIp.Name = "txtIp";
-            this.txtIp.Size = new System.Drawing.Size(111, 20);
-            this.txtIp.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 26);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Address";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 61);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Port";
-            // 
-            // txtPort
-            // 
-            this.txtPort.Location = new System.Drawing.Point(54, 58);
-            this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(111, 20);
-            this.txtPort.TabIndex = 8;
-            this.txtPort.Text = "554";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 89);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(32, 13);
-            this.label4.TabIndex = 10;
-            this.label4.Text = "State";
+            this.ConnectedClientsList.ForeColor = System.Drawing.SystemColors.WindowText;
+            this.ConnectedClientsList.FormattingEnabled = true;
+            this.ConnectedClientsList.Location = new System.Drawing.Point(179, 33);
+            this.ConnectedClientsList.Name = "ConnectedClientsList";
+            this.ConnectedClientsList.Size = new System.Drawing.Size(165, 69);
+            this.ConnectedClientsList.TabIndex = 5;
             // 
             // lblState
             // 
@@ -313,14 +286,46 @@
             this.lblState.TabIndex = 11;
             this.lblState.UseMnemonic = false;
             // 
-            // ConnectedClientsList
+            // label4
             // 
-            this.ConnectedClientsList.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ConnectedClientsList.FormattingEnabled = true;
-            this.ConnectedClientsList.Location = new System.Drawing.Point(171, 23);
-            this.ConnectedClientsList.Name = "ConnectedClientsList";
-            this.ConnectedClientsList.Size = new System.Drawing.Size(175, 121);
-            this.ConnectedClientsList.TabIndex = 5;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 91);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(32, 13);
+            this.label4.TabIndex = 10;
+            this.label4.Text = "State";
+            // 
+            // buttonStopServer
+            // 
+            this.buttonStopServer.Enabled = false;
+            this.buttonStopServer.Location = new System.Drawing.Point(88, 120);
+            this.buttonStopServer.Name = "buttonStopServer";
+            this.buttonStopServer.Size = new System.Drawing.Size(75, 23);
+            this.buttonStopServer.TabIndex = 5;
+            this.buttonStopServer.Text = "Stop";
+            this.buttonStopServer.UseVisualStyleBackColor = true;
+            this.buttonStopServer.Click += new System.EventHandler(this.buttonStopServer_Click);
+            // 
+            // buttonStartServer
+            // 
+            this.buttonStartServer.Enabled = false;
+            this.buttonStartServer.Location = new System.Drawing.Point(7, 120);
+            this.buttonStartServer.Name = "buttonStartServer";
+            this.buttonStartServer.Size = new System.Drawing.Size(75, 23);
+            this.buttonStartServer.TabIndex = 4;
+            this.buttonStartServer.Text = "Start";
+            this.buttonStartServer.UseVisualStyleBackColor = true;
+            this.buttonStartServer.Click += new System.EventHandler(this.buttonStartServer_Click);
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(176, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(150, 17);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Connected Clients";
+            this.label2.Visible = false;
             // 
             // MotionForm
             // 
@@ -368,10 +373,9 @@
         private System.Windows.Forms.Button buttonStartServer;
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtPort;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txtIp;
         private System.Windows.Forms.ListBox ConnectedClientsList;
+        private System.Windows.Forms.Label lbl_endpoint;
+        private System.Windows.Forms.Label lbl_hint;
+        private System.Windows.Forms.Label label2;
     }
 }

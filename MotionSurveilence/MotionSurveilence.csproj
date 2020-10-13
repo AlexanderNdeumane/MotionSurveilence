@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MQTTnet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Downloads\MQTTnet-master\Source\MQTTnet\bin\Release\net452\MQTTnet.dll</HintPath>
+    </Reference>
     <Reference Include="OzekiSDK">
       <HintPath>..\..\..\..\Documents\Camera Examples\SDK\NET4\OzekiSDK.dll</HintPath>
     </Reference>

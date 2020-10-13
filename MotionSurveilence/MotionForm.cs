@@ -5,6 +5,11 @@ using Ozeki.Vision;
 using Ozeki.Media;
 using System.Reactive;
 using Ozeki.Network;
+using System.Threading.Tasks;
+using MQTTnet;
+using MQTTnet.Client.Options;
+using System.Threading;
+using MQTTnet.Client;
 
 namespace MotionSurveilence
 {
@@ -89,6 +94,7 @@ namespace MotionSurveilence
         //
         private void buttonConnect_Click(object sender, EventArgs e)
         {
+            
             {
                 if (_webCamera != null)
                 {
@@ -164,6 +170,7 @@ namespace MotionSurveilence
             {
                 case true:
                     InvokeGuiThread(() => label_Motion.Text = "Detecting motion");
+                    PublishMQTTTOpic();
                     break;
                 case false:
                     InvokeGuiThread(() => label_Motion.Text = "No motion detected");
@@ -355,7 +362,49 @@ namespace MotionSurveilence
             buttonConnect.Enabled = true;
             buttonDisconnect.Enabled = false;
         }
+        //
+        //
+        //
+        private async Task PublishMQTTTOpic()
+        {
+            var ip = NetworkAddressHelper.GetLocalIP();
+            
+            var factory = new MqttFactory();
+            var mqttClient = factory.CreateMqttClient();
+
+            var options = new MqttClientOptionsBuilder()
+                .WithClientId("MotionSurveillence")
+                .WithTcpServer(ip.ToString(), 1883)
+                .Build();
+
+            await mqttClient.ConnectAsync(options, CancellationToken.None);
+
+            var message = new MqttApplicationMessageBuilder()
+                .WithTopic("look")
+                .WithPayload("motion")
+                .WithAtMostOnceQoS()
+                .WithRetainFlag(true)
+                .Build();
+
+            await mqttClient.PublishAsync(message, CancellationToken.None);
+
+            mqttClient.UseDisconnectedHandler(async e =>
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+
+                try
+                {
+                    await mqttClient.ConnectAsync(options, CancellationToken.None); // Since 3.0.5 with CancellationToken
+                }
+                catch
+                {
+
+                }
+            });
+
+        }
         
+
     }
         
 }

@@ -23,6 +23,11 @@ namespace MotionSurveilence
         private MotionDetector _motionDetector;
         private MotionDetector _motionRecorder;
         private MyServer _server;
+        private MqttFactory factory;
+        private MqttClient mqttClient;
+        private Boolean mqttFlag;
+        //private MqttApplicationMessage message;
+        //private MqttClientOptionsBuilder options;
 
         //
         //Method that initiates the program
@@ -33,6 +38,8 @@ namespace MotionSurveilence
 
             _motionRecorder = new MotionDetector();
             _motionDetector = new MotionDetector();
+
+            mqttFlag = false;
 
             _server = new MyServer();
             _server.ClientCountChanged += _server_OnClientCountChanged;
@@ -152,6 +159,7 @@ namespace MotionSurveilence
             rad_rec_AndDet_motion.Enabled = true;
             rad_rec_OnMotion.Enabled = true;
             buttonStartServer.Enabled = true;
+            cb_mobileAlert.Enabled = true;
         }
         //
         //disable buttons when disconnected from a camera
@@ -165,6 +173,7 @@ namespace MotionSurveilence
             rad_rec_OnMotion.Enabled = false;
             buttonStartServer.Enabled = false;
             buttonStopServer.Enabled = false;
+            cb_mobileAlert.Enabled = false;
         }
 
         //
@@ -210,7 +219,7 @@ namespace MotionSurveilence
             {
                 case true:
                     InvokeGuiThread(() => label_Motion.Text = "Detecting motion");
-                    PublishMQTTTOpic();
+                    PublishMessageMqtt();
                     break;
                 case false:
                     InvokeGuiThread(() => label_Motion.Text = "No motion detected");
@@ -240,7 +249,7 @@ namespace MotionSurveilence
         //
         private void rad_normal_CheckedChanged(object sender, EventArgs e)
         {
-             
+            uncheck_mobile_alert();
         }
         //
         //when record is checked, application streams and records
@@ -248,6 +257,7 @@ namespace MotionSurveilence
         //
         private void rad_rec_normal_CheckedChanged(object sender, EventArgs e)
         {
+            uncheck_mobile_alert();
             if (rad_rec_normal.Checked)
             {
                 StartRecording();
@@ -271,7 +281,6 @@ namespace MotionSurveilence
             {
                 StopMotionDetection();
             }
-            
         }
         //
         //when record and detect motion is checked, application
@@ -339,31 +348,41 @@ namespace MotionSurveilence
         //method starts the streaming server when
         //start button is clicked
         //
-        private void buttonStartServer_Click(object sender, EventArgs e)
+        private void buttonStartServer_Click(object sender, EventArgs e) 
         {
-            var ip = NetworkAddressHelper.GetLocalIP();
+            try
+            {
+                var ip = NetworkAddressHelper.GetLocalIP();
+
+                var port = 554;
+
+                _server.VideoSender = _webCamera.VideoChannel;
+
+                _server.Start();
+
+                var url = "rtsp://" + ip.ToString() + ":" + port;
+
+                var config = new OnvifConfig(8088, ip.ToString(), true, url);
+
+                _server.SetOnvifListenAddress(config);
+
+                _server.SetListenAddress(ip.ToString(), port);
+
+                if (config != null)
+                {
+                    lbl_hint.Visible = true;
+                    lbl_endpoint.Visible = true;
+                    lbl_hint.Text = url;
+                    buttonStartServer.Enabled = false;
+                    buttonStopServer.Enabled = true;
+                }
+            }
+            catch
+            {
+                lbl_hint.Visible = true;
+                lbl_hint.Text = "Please connect to your wifi network or close and run the program as an administrator";
+            }
             
-            var port = 554;
-            
-            _server.VideoSender = _webCamera.VideoChannel;
-
-            _server.Start();
-
-            var url = "rtsp://" + ip.ToString() + ":" + port;
-
-            var config = new OnvifConfig(8088, ip.ToString(), true, url);
-
-            lbl_hint.Visible = true;
-            lbl_endpoint.Text = url;
-
-            _server.SetOnvifListenAddress(config);
-
-            _server.SetListenAddress(ip.ToString(), port);
-
-            lbl_endpoint.Visible = true;
-
-            buttonStartServer.Enabled = false;
-            buttonStopServer.Enabled = true;
         }
         //
         //method stops the streaming server when stop button
@@ -408,12 +427,12 @@ namespace MotionSurveilence
         //
         //
         //
-        private async Task PublishMQTTTOpic()
+        private async Task ConnectMqtt()
         {
             var ip = NetworkAddressHelper.GetLocalIP();
-            
-            var factory = new MqttFactory();
-            var mqttClient = factory.CreateMqttClient();
+
+            factory = new MqttFactory();
+            mqttClient = (MqttClient)factory.CreateMqttClient();
 
             var options = new MqttClientOptionsBuilder()
                 .WithClientId("MotionSurveillence")
@@ -421,33 +440,87 @@ namespace MotionSurveilence
                 .Build();
 
             await mqttClient.ConnectAsync(options, CancellationToken.None);
+            mqttFlag = true;
 
-            var message = new MqttApplicationMessageBuilder()
+
+            /*mqttClient.UseDisconnectedHandler(async e =>
+            {
+                await Task.Delay(TimeSpan.FromSeconds(5));
+
+                try
+                {
+                    await mqttClient.ConnectAsync((IMqttClientOptions)options, CancellationToken.None); // Since 3.0.5 with CancellationToken
+                }
+                catch
+                {
+
+                }
+            });*/
+        }
+        //
+        //
+        //
+        private async Task DisconnectMqtt()
+        {
+            await mqttClient.DisconnectAsync();
+            mqttFlag = false;
+        }
+
+        //
+        //
+        //
+        private async Task PublishMessageMqtt()
+        {
+            if (mqttFlag == true)
+            {
+                var message = new MqttApplicationMessageBuilder()
                 .WithTopic("look")
                 .WithPayload("motion")
                 .WithAtMostOnceQoS()
                 .WithRetainFlag(true)
                 .Build();
 
-            await mqttClient.PublishAsync(message, CancellationToken.None);
-
-            mqttClient.UseDisconnectedHandler(async e =>
-            {
-                await Task.Delay(TimeSpan.FromSeconds(5));
-
-                try
-                {
-                    await mqttClient.ConnectAsync(options, CancellationToken.None); // Since 3.0.5 with CancellationToken
-                }
-                catch
-                {
-
-                }
-            });
-
+                await mqttClient.PublishAsync(message, CancellationToken.None);
+            }
         }
-        
+        //
+        //
+        //
+        private void cb_mobileAlert_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            if (rad_motion.Checked || rad_rec_AndDet_motion.Checked || rad_rec_OnMotion.Checked)
+            {
+                lbl_hint.Visible = false;
+                if (cb_mobileAlert.Checked == true)
+                {
+                    ConnectMqtt();
+                }
+                else
+                {
+                    DisconnectMqtt();
+                }
+
+                
+            }
+            else
+            {
+                cb_mobileAlert.Checked = false;
+                lbl_hint.Visible = true;
+                lbl_hint.Text = "Please select one of the motion detection functions to enable mobile alert";
+            }
+        }
+        //
+        //
+        //
+        public void uncheck_mobile_alert()
+        {
+            if (cb_mobileAlert.Checked)
+            {
+                cb_mobileAlert.Checked = false;
+                lbl_hint.Visible = false;
+            }
+        }
 
     }
-        
 }

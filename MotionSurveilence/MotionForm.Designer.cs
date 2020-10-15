@@ -45,14 +45,15 @@
             this.rad_normal = new System.Windows.Forms.RadioButton();
             this.label_Motion = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lbl_hint = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.lbl_endpoint = new System.Windows.Forms.Label();
+            this.lbl_hint = new System.Windows.Forms.Label();
             this.ConnectedClientsList = new System.Windows.Forms.ListBox();
             this.lblState = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonStopServer = new System.Windows.Forms.Button();
             this.buttonStartServer = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.cb_mobileAlert = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -165,10 +166,10 @@
             this.rad_rec_AndDet_motion.Enabled = false;
             this.rad_rec_AndDet_motion.Location = new System.Drawing.Point(6, 87);
             this.rad_rec_AndDet_motion.Name = "rad_rec_AndDet_motion";
-            this.rad_rec_AndDet_motion.Size = new System.Drawing.Size(151, 17);
+            this.rad_rec_AndDet_motion.Size = new System.Drawing.Size(148, 17);
             this.rad_rec_AndDet_motion.TabIndex = 4;
             this.rad_rec_AndDet_motion.TabStop = true;
-            this.rad_rec_AndDet_motion.Text = "Record and Detect Motion";
+            this.rad_rec_AndDet_motion.Text = "Record and detect motion";
             this.rad_rec_AndDet_motion.UseVisualStyleBackColor = true;
             this.rad_rec_AndDet_motion.CheckedChanged += new System.EventHandler(this.rad_rec_AndDet_motion_CheckedChanged);
             // 
@@ -191,10 +192,10 @@
             this.rad_rec_OnMotion.Enabled = false;
             this.rad_rec_OnMotion.Location = new System.Drawing.Point(6, 110);
             this.rad_rec_OnMotion.Name = "rad_rec_OnMotion";
-            this.rad_rec_OnMotion.Size = new System.Drawing.Size(159, 17);
+            this.rad_rec_OnMotion.Size = new System.Drawing.Size(156, 17);
             this.rad_rec_OnMotion.TabIndex = 2;
             this.rad_rec_OnMotion.TabStop = true;
-            this.rad_rec_OnMotion.Text = "Record on Motion Detection";
+            this.rad_rec_OnMotion.Text = "Record on motion detection";
             this.rad_rec_OnMotion.UseVisualStyleBackColor = true;
             this.rad_rec_OnMotion.CheckedChanged += new System.EventHandler(this.rad_rec_OnMotion_CheckedChanged);
             // 
@@ -204,10 +205,10 @@
             this.rad_motion.Enabled = false;
             this.rad_motion.Location = new System.Drawing.Point(6, 64);
             this.rad_motion.Name = "rad_motion";
-            this.rad_motion.Size = new System.Drawing.Size(92, 17);
+            this.rad_motion.Size = new System.Drawing.Size(91, 17);
             this.rad_motion.TabIndex = 1;
             this.rad_motion.TabStop = true;
-            this.rad_motion.Text = "Detect Motion";
+            this.rad_motion.Text = "Detect motion";
             this.rad_motion.UseVisualStyleBackColor = true;
             this.rad_motion.CheckedChanged += new System.EventHandler(this.rad_motion_CheckedChanged);
             // 
@@ -235,9 +236,10 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cb_mobileAlert);
             this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.lbl_hint);
             this.groupBox3.Controls.Add(this.lbl_endpoint);
+            this.groupBox3.Controls.Add(this.lbl_hint);
             this.groupBox3.Controls.Add(this.ConnectedClientsList);
             this.groupBox3.Controls.Add(this.lblState);
             this.groupBox3.Controls.Add(this.label4);
@@ -250,24 +252,34 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Streaming";
             // 
-            // lbl_hint
+            // label2
             // 
-            this.lbl_hint.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_hint.Location = new System.Drawing.Point(7, 19);
-            this.lbl_hint.Name = "lbl_hint";
-            this.lbl_hint.Size = new System.Drawing.Size(150, 17);
-            this.lbl_hint.TabIndex = 13;
-            this.lbl_hint.Text = "Endpoint:";
-            this.lbl_hint.Visible = false;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(176, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(150, 17);
+            this.label2.TabIndex = 14;
+            this.label2.Text = "Connected Clients";
+            this.label2.Visible = false;
             // 
             // lbl_endpoint
             // 
-            this.lbl_endpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbl_endpoint.Location = new System.Drawing.Point(7, 36);
+            this.lbl_endpoint.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_endpoint.Location = new System.Drawing.Point(7, 19);
             this.lbl_endpoint.Name = "lbl_endpoint";
-            this.lbl_endpoint.Size = new System.Drawing.Size(166, 16);
-            this.lbl_endpoint.TabIndex = 12;
+            this.lbl_endpoint.Size = new System.Drawing.Size(150, 17);
+            this.lbl_endpoint.TabIndex = 13;
+            this.lbl_endpoint.Text = "Endpoint:";
             this.lbl_endpoint.Visible = false;
+            // 
+            // lbl_hint
+            // 
+            this.lbl_hint.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbl_hint.Location = new System.Drawing.Point(7, 36);
+            this.lbl_hint.Name = "lbl_hint";
+            this.lbl_hint.Size = new System.Drawing.Size(166, 55);
+            this.lbl_hint.TabIndex = 12;
+            this.lbl_hint.Visible = false;
             // 
             // ConnectedClientsList
             // 
@@ -317,15 +329,17 @@
             this.buttonStartServer.UseVisualStyleBackColor = true;
             this.buttonStartServer.Click += new System.EventHandler(this.buttonStartServer_Click);
             // 
-            // label2
+            // cb_mobileAlert
             // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(176, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(150, 17);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Connected Clients";
-            this.label2.Visible = false;
+            this.cb_mobileAlert.AutoSize = true;
+            this.cb_mobileAlert.Enabled = false;
+            this.cb_mobileAlert.Location = new System.Drawing.Point(179, 120);
+            this.cb_mobileAlert.Name = "cb_mobileAlert";
+            this.cb_mobileAlert.Size = new System.Drawing.Size(80, 17);
+            this.cb_mobileAlert.TabIndex = 15;
+            this.cb_mobileAlert.Text = "Mobile alert";
+            this.cb_mobileAlert.UseVisualStyleBackColor = true;
+            this.cb_mobileAlert.CheckedChanged += new System.EventHandler(this.cb_mobileAlert_CheckedChanged);
             // 
             // MotionForm
             // 
@@ -374,8 +388,9 @@
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ListBox ConnectedClientsList;
-        private System.Windows.Forms.Label lbl_endpoint;
         private System.Windows.Forms.Label lbl_hint;
+        private System.Windows.Forms.Label lbl_endpoint;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.CheckBox cb_mobileAlert;
     }
 }

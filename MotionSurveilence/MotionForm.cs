@@ -390,8 +390,16 @@ namespace MotionSurveilence
 
         private void buttonStopServer_Click(object sender, EventArgs e)
         {
-            _server.ClientCountChanged -= _server_OnClientCountChanged;
-            _server.VideoSender = null;
+            var port = 554;
+
+            var ip = NetworkAddressHelper.GetLocalIP();
+
+            var url = "rtsp://" + ip.ToString() + ":" + port;
+
+            var config = new OnvifConfig(8088, ip.ToString(), true, url);
+
+            _server.UnsubscribeOnvifListenAddress(config);
+            _server.Stop();
 
             lbl_endpoint.Visible = false;
             lbl_hint.Visible = false;
@@ -493,6 +501,10 @@ namespace MotionSurveilence
                 lbl_hint.Visible = false;
                 if (cb_mobileAlert.Checked == true)
                 {
+                    var ip = NetworkAddressHelper.GetLocalIP();
+                    lbl_hint.Visible = true;
+                    lbl_endpoint.Visible = true;
+                    lbl_hint.Text = ip.ToString().Substring(8);
                     ConnectMqtt();
                 }
                 else

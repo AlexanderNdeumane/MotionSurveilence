@@ -41,9 +41,6 @@ namespace MotionSurveilence
 
             mqttFlag = false;
 
-            _server = new MyServer();
-            _server.ClientCountChanged += _server_OnClientCountChanged;
-
             _imageProvider = new Ozeki.Media.DrawingImageProvider();
             _mediaConnector = new Ozeki.Media.MediaConnector();
             var data = new Ozeki.Media.CameraURLBuilderData { DeviceTypeFilter = Ozeki.Media.DiscoverDeviceType.Both };
@@ -350,6 +347,8 @@ namespace MotionSurveilence
         //
         private void buttonStartServer_Click(object sender, EventArgs e) 
         {
+            _server = new MyServer();
+            _server.ClientCountChanged += _server_OnClientCountChanged;
             try
             {
                 var ip = NetworkAddressHelper.GetLocalIP();
@@ -392,7 +391,7 @@ namespace MotionSurveilence
         private void buttonStopServer_Click(object sender, EventArgs e)
         {
             _server.ClientCountChanged -= _server_OnClientCountChanged;
-            _server.Stop();
+            _server.VideoSender = null;
 
             lbl_endpoint.Visible = false;
             lbl_hint.Visible = false;
@@ -477,7 +476,7 @@ namespace MotionSurveilence
                 .WithTopic("look")
                 .WithPayload("motion")
                 .WithAtMostOnceQoS()
-                .WithRetainFlag(true)
+                .WithRetainFlag(false)
                 .Build();
 
                 await mqttClient.PublishAsync(message, CancellationToken.None);

@@ -371,7 +371,7 @@ namespace MotionSurveilence
                 {
                     lbl_hint.Visible = true;
                     lbl_endpoint.Visible = true;
-                    lbl_hint.Text = url;
+                    lbl_hint.Text = ip.ToString().Substring(8);
                     buttonStartServer.Enabled = false;
                     buttonStopServer.Enabled = true;
                 }

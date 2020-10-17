@@ -45,6 +45,7 @@
             this.rad_normal = new System.Windows.Forms.RadioButton();
             this.label_Motion = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cb_mobileAlert = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lbl_endpoint = new System.Windows.Forms.Label();
             this.lbl_hint = new System.Windows.Forms.Label();
@@ -53,7 +54,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.buttonStopServer = new System.Windows.Forms.Button();
             this.buttonStartServer = new System.Windows.Forms.Button();
-            this.cb_mobileAlert = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -252,6 +252,18 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Streaming";
             // 
+            // cb_mobileAlert
+            // 
+            this.cb_mobileAlert.AutoSize = true;
+            this.cb_mobileAlert.Enabled = false;
+            this.cb_mobileAlert.Location = new System.Drawing.Point(179, 120);
+            this.cb_mobileAlert.Name = "cb_mobileAlert";
+            this.cb_mobileAlert.Size = new System.Drawing.Size(80, 17);
+            this.cb_mobileAlert.TabIndex = 15;
+            this.cb_mobileAlert.Text = "Mobile alert";
+            this.cb_mobileAlert.UseVisualStyleBackColor = true;
+            this.cb_mobileAlert.CheckedChanged += new System.EventHandler(this.cb_mobileAlert_CheckedChanged);
+            // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -269,7 +281,7 @@
             this.lbl_endpoint.Name = "lbl_endpoint";
             this.lbl_endpoint.Size = new System.Drawing.Size(150, 17);
             this.lbl_endpoint.TabIndex = 13;
-            this.lbl_endpoint.Text = "Endpoint:";
+            this.lbl_endpoint.Text = "Connect number";
             this.lbl_endpoint.Visible = false;
             // 
             // lbl_hint
@@ -328,18 +340,6 @@
             this.buttonStartServer.Text = "Start";
             this.buttonStartServer.UseVisualStyleBackColor = true;
             this.buttonStartServer.Click += new System.EventHandler(this.buttonStartServer_Click);
-            // 
-            // cb_mobileAlert
-            // 
-            this.cb_mobileAlert.AutoSize = true;
-            this.cb_mobileAlert.Enabled = false;
-            this.cb_mobileAlert.Location = new System.Drawing.Point(179, 120);
-            this.cb_mobileAlert.Name = "cb_mobileAlert";
-            this.cb_mobileAlert.Size = new System.Drawing.Size(80, 17);
-            this.cb_mobileAlert.TabIndex = 15;
-            this.cb_mobileAlert.Text = "Mobile alert";
-            this.cb_mobileAlert.UseVisualStyleBackColor = true;
-            this.cb_mobileAlert.CheckedChanged += new System.EventHandler(this.cb_mobileAlert_CheckedChanged);
             // 
             // MotionForm
             // 

@@ -21,13 +21,10 @@ namespace MotionSurveilence
         private MPEG4Recorder _recorder;
         private CameraURLBuilderWF _myCameraUrlBuilder;
         private MotionDetector _motionDetector;
-        private MotionDetector _motionRecorder;
         private MyServer _server;
         private MqttFactory factory;
         private MqttClient mqttClient;
         private Boolean mqttFlag;
-        //private MqttApplicationMessage message;
-        //private MqttClientOptionsBuilder options;
 
         //
         //Method that initiates the program
@@ -35,8 +32,6 @@ namespace MotionSurveilence
         public MotionForm()
         {
             InitializeComponent();
-
-            _motionRecorder = new MotionDetector();
             _motionDetector = new MotionDetector();
 
             mqttFlag = false;
@@ -49,14 +44,14 @@ namespace MotionSurveilence
             videoViewerWF1.SetImageProvider(_imageProvider);
         }
         //
-        //
+        //Starts the gui of the app
         //
         private void InvokeGuiThread(Action action)
         {
             BeginInvoke(action);
         }
         //
-        //
+        //Changes the label of the state depending on what is going on
         //
         void _webCamera_CameraStateChanged(object sender, CameraStateEventArgs e)
         {
@@ -150,27 +145,32 @@ namespace MotionSurveilence
         //
         public void enableButtons()
         {
-            rad_normal.Enabled = true;
-            rad_rec_normal.Enabled = true;
-            rad_motion.Enabled = true;
-            rad_rec_AndDet_motion.Enabled = true;
-            rad_rec_OnMotion.Enabled = true;
+            //rad_normal.Enabled = true;
+            //rad_rec_normal.Enabled = true;
+            //rad_motion.Enabled = true;
+            //rad_rec_AndDet_motion.Enabled = true;
+            //rad_rec_OnMotion.Enabled = true;
             buttonStartServer.Enabled = true;
             cb_mobileAlert.Enabled = true;
+            detectMotion.Enabled = true;
+            Start_Recording.Enabled = true;
         }
         //
         //disable buttons when disconnected from a camera
         //
         public void disableButtons()
         {
-            rad_normal.Enabled = false;
-            rad_rec_normal.Enabled = false;
-            rad_motion.Enabled = false;
-            rad_rec_AndDet_motion.Enabled = false;
-            rad_rec_OnMotion.Enabled = false;
+            //rad_normal.Enabled = false;
+            //rad_rec_normal.Enabled = false;
+            //rad_motion.Enabled = false;
+            //rad_rec_AndDet_motion.Enabled = false;
+            //rad_rec_OnMotion.Enabled = false;
             buttonStartServer.Enabled = false;
             buttonStopServer.Enabled = false;
             cb_mobileAlert.Enabled = false;
+            detectMotion.Enabled = false;
+            Start_Recording.Enabled = false;
+            Stop_Recording.Enabled = false;
         }
 
         //
@@ -181,32 +181,6 @@ namespace MotionSurveilence
             _recorder.MultiplexFinished -= _recorder_MultiplexFinished;
             _recorder.Dispose();
         }
-        //
-        //Method that starts video recording
-        //
-        private void StartRecording()
-        {
-            if (_webCamera.VideoChannel == null) return;
-            var date = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" +
-                        DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Second;
-
-            var currentpath = AppDomain.CurrentDomain.BaseDirectory + date + ".mpeg4";
-
-            _recorder = new MPEG4Recorder(currentpath);
-            _recorder.MultiplexFinished += _recorder_MultiplexFinished;
-
-            _mediaConnector.Connect(_webCamera.VideoChannel, _recorder.VideoRecorder);
-        }
-        //
-        //Method that stops video recording
-        //
-        private void StopRecording()
-        {
-            if (_webCamera.VideoChannel == null) return;
-            _mediaConnector.Disconnect(_webCamera.VideoChannel, _recorder.VideoRecorder);
-            _recorder.Multiplex();
-        }
-        
         //
         //Method that detects motion in the video
         //
@@ -221,104 +195,6 @@ namespace MotionSurveilence
                 case false:
                     InvokeGuiThread(() => label_Motion.Text = "No motion detected");
                     break;
-            }
-        }
-        //
-        //Method detects motion in video for recording
-        //
-        private void _motionRecorder_MotionDetection(object sender, MotionDetectionEvent e)
-        {
-            if(e.Detection == true)
-            {
-                InvokeGuiThread(() => label_Motion.Text = "Motion recorder started");
-                StartRecording();
-            }
-            else
-            {
-                InvokeGuiThread(() => label_Motion.Text = "Motion recorder stopped");
-                StopRecording();
-            }
-
-        }
-        //
-        //When radio normal radio button is checked, application
-        //streams webcam footage
-        //
-        private void rad_normal_CheckedChanged(object sender, EventArgs e)
-        {
-            uncheck_mobile_alert();
-        }
-        //
-        //when record is checked, application streams and records
-        //webcam footage
-        //
-        private void rad_rec_normal_CheckedChanged(object sender, EventArgs e)
-        {
-            uncheck_mobile_alert();
-            if (rad_rec_normal.Checked)
-            {
-                StartRecording();
-            }
-            else
-            {
-                StopRecording();
-            }
-        }
-        //
-        //when detect motion is checked, application streams
-        //webcam footage and detects motion
-        //
-        private void rad_motion_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rad_motion.Checked)
-            {
-                StartMotionDetection();
-            }
-            else
-            {
-                StopMotionDetection();
-            }
-        }
-        //
-        //when record and detect motion is checked, application
-        //streams webcam footage, detects motion and records
-        //
-        private void rad_rec_AndDet_motion_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rad_rec_AndDet_motion.Checked)
-            {
-                StartRecording();
-                StartMotionDetection();
-            }
-            else
-            {
-                StopRecording();
-                StopMotionDetection();
-            }
-        }
-        //
-        //when record on motion detection is checked, application
-        //streams webcam footage and records when motion is detected
-        //
-        private void rad_rec_OnMotion_CheckedChanged(object sender, EventArgs e)
-        {
-
-            if (rad_rec_OnMotion.Checked)
-            {
-                _mediaConnector.Connect(_webCamera.VideoChannel, _motionRecorder);
-                _mediaConnector.Connect(_motionRecorder, _imageProvider);
-                _motionRecorder.HighlightMotion = HighlightMotion.Highlight;
-                _motionRecorder.MotionColor = MotionColor.Blue;
-                _motionRecorder.MotionDetection += _motionRecorder_MotionDetection;
-                _motionRecorder.Start();
-            }
-            else
-            {
-                _mediaConnector.Disconnect(_webCamera.VideoChannel, _motionRecorder);
-                _mediaConnector.Disconnect(_motionRecorder, _imageProvider);
-                _motionRecorder.MotionDetection -= _motionRecorder_MotionDetection;
-                _motionRecorder.Stop();
-                
             }
         }
         //
@@ -348,7 +224,6 @@ namespace MotionSurveilence
         private void buttonStartServer_Click(object sender, EventArgs e) 
         {
             _server = new MyServer();
-            _server.ClientCountChanged += _server_OnClientCountChanged;
             try
             {
                 var ip = NetworkAddressHelper.GetLocalIP();
@@ -387,7 +262,6 @@ namespace MotionSurveilence
         //method stops the streaming server when stop button
         //is clicked
         //
-
         private void buttonStopServer_Click(object sender, EventArgs e)
         {
             var port = 554;
@@ -407,32 +281,9 @@ namespace MotionSurveilence
             buttonStartServer.Enabled = true;
             buttonStopServer.Enabled = false;
         }
+        
         //
-        //
-        //
-        void _server_ServerStateChanged(object sender, CameraServerStateChangedArgs e)
-        {
-            InvokeGuiThread(() =>
-            {
-                lblState.Text = e.State.ToString();
-            });
-        }
-        //
-        //
-        //
-        void _server_OnClientCountChanged(object sender, EventArgs e)
-        {
-            InvokeGuiThread(() =>
-            {
-                ConnectedClientsList.Items.Clear();
-
-                foreach (var client in _server.ConnectedClients)
-                    ConnectedClientsList.Items.Add("End point: " +
-                        client.TransportInfo.RemoteEndPoint);
-            });
-        }
-        //
-        //
+        //Method connects to mosquitto mqtt server
         //
         private async Task ConnectMqtt()
         {
@@ -465,16 +316,16 @@ namespace MotionSurveilence
             });*/
         }
         //
-        //
+        //Method disconnects from the mosquitto mqtt server
         //
         private async Task DisconnectMqtt()
         {
             await mqttClient.DisconnectAsync();
             mqttFlag = false;
         }
-
         //
-        //
+        //method publishes a message to the mqtt server when it detects motion
+        //allowing clients connected to the server to get notifications
         //
         private async Task PublishMessageMqtt()
         {
@@ -491,12 +342,16 @@ namespace MotionSurveilence
             }
         }
         //
-        //
+        //method changes function of the app depending on the checked
+        //status of the "mobile alert" check box.
+        //if the check box is checked, it shows the connect number
+        //and enables the alert on detection function. If unchecked it
+        //disconnects if connected
         //
         private void cb_mobileAlert_CheckedChanged(object sender, EventArgs e)
         {
             
-            if (rad_motion.Checked || rad_rec_AndDet_motion.Checked || rad_rec_OnMotion.Checked)
+            if (detectMotion.Checked)
             {
                 lbl_hint.Visible = false;
                 if (cb_mobileAlert.Checked == true)
@@ -511,27 +366,63 @@ namespace MotionSurveilence
                 {
                     DisconnectMqtt();
                 }
-
-                
             }
             else
             {
                 cb_mobileAlert.Checked = false;
                 lbl_hint.Visible = true;
-                lbl_hint.Text = "Please select one of the motion detection functions to enable mobile alert";
+                lbl_hint.Text = "Please enable motion detection to enable mobile alert";
             }
         }
         //
+        //Method starts recording webcam footage when button is pressed
         //
-        //
-        public void uncheck_mobile_alert()
+        private void Start_Recording_Click(object sender, EventArgs e)
         {
-            if (cb_mobileAlert.Checked)
+            if (_webCamera.VideoChannel == null) return;
+            var date = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" +
+                        DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Second;
+
+            var currentpath = AppDomain.CurrentDomain.BaseDirectory + date + ".mpeg4";
+
+            _recorder = new MPEG4Recorder(currentpath);
+            _recorder.MultiplexFinished += _recorder_MultiplexFinished;
+
+            _mediaConnector.Connect(_webCamera.VideoChannel, _recorder.VideoRecorder);
+
+            Start_Recording.Enabled = false;
+            Stop_Recording.Enabled = true;
+        }
+        //
+        //Method stops recording webcam footage when button is pressed
+        //
+        private void Stop_Recording_Click(object sender, EventArgs e)
+        {
+            if (_webCamera.VideoChannel == null) return;
+            _mediaConnector.Disconnect(_webCamera.VideoChannel, _recorder.VideoRecorder);
+            _recorder.Multiplex();
+
+            Start_Recording.Enabled = true;
+            Stop_Recording.Enabled = false;
+        }
+        //
+        //Method enables or disables motion detection depending on the checked status
+        //
+        private void detectMotion_CheckedChanged(object sender, EventArgs e)
+        {
+            if (detectMotion.Checked == true)
             {
-                cb_mobileAlert.Checked = false;
-                lbl_hint.Visible = false;
+                StartMotionDetection();
+            }
+            else
+            {
+                StopMotionDetection();
+                if (cb_mobileAlert.Checked)
+                {
+                    cb_mobileAlert.Checked = false;
+                    lbl_hint.Text = "";
+                }
             }
         }
-
     }
 }

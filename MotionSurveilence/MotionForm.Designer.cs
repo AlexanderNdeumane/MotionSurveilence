@@ -38,22 +38,18 @@
             this.labelState = new System.Windows.Forms.Label();
             this.videoViewerWF1 = new Ozeki.Media.VideoViewerWF();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rad_rec_AndDet_motion = new System.Windows.Forms.RadioButton();
-            this.rad_rec_normal = new System.Windows.Forms.RadioButton();
-            this.rad_rec_OnMotion = new System.Windows.Forms.RadioButton();
-            this.rad_motion = new System.Windows.Forms.RadioButton();
-            this.rad_normal = new System.Windows.Forms.RadioButton();
             this.label_Motion = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cb_mobileAlert = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.lbl_endpoint = new System.Windows.Forms.Label();
             this.lbl_hint = new System.Windows.Forms.Label();
-            this.ConnectedClientsList = new System.Windows.Forms.ListBox();
             this.lblState = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.buttonStopServer = new System.Windows.Forms.Button();
             this.buttonStartServer = new System.Windows.Forms.Button();
+            this.detectMotion = new System.Windows.Forms.CheckBox();
+            this.Start_Recording = new System.Windows.Forms.Button();
+            this.Stop_Recording = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -148,84 +144,15 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.rad_rec_AndDet_motion);
-            this.groupBox2.Controls.Add(this.rad_rec_normal);
-            this.groupBox2.Controls.Add(this.rad_rec_OnMotion);
-            this.groupBox2.Controls.Add(this.rad_motion);
-            this.groupBox2.Controls.Add(this.rad_normal);
+            this.groupBox2.Controls.Add(this.Stop_Recording);
+            this.groupBox2.Controls.Add(this.Start_Recording);
+            this.groupBox2.Controls.Add(this.detectMotion);
             this.groupBox2.Location = new System.Drawing.Point(418, 28);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(352, 149);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controllers";
-            // 
-            // rad_rec_AndDet_motion
-            // 
-            this.rad_rec_AndDet_motion.AutoSize = true;
-            this.rad_rec_AndDet_motion.Enabled = false;
-            this.rad_rec_AndDet_motion.Location = new System.Drawing.Point(6, 87);
-            this.rad_rec_AndDet_motion.Name = "rad_rec_AndDet_motion";
-            this.rad_rec_AndDet_motion.Size = new System.Drawing.Size(148, 17);
-            this.rad_rec_AndDet_motion.TabIndex = 4;
-            this.rad_rec_AndDet_motion.TabStop = true;
-            this.rad_rec_AndDet_motion.Text = "Record and detect motion";
-            this.rad_rec_AndDet_motion.UseVisualStyleBackColor = true;
-            this.rad_rec_AndDet_motion.CheckedChanged += new System.EventHandler(this.rad_rec_AndDet_motion_CheckedChanged);
-            // 
-            // rad_rec_normal
-            // 
-            this.rad_rec_normal.AutoSize = true;
-            this.rad_rec_normal.Enabled = false;
-            this.rad_rec_normal.Location = new System.Drawing.Point(6, 43);
-            this.rad_rec_normal.Name = "rad_rec_normal";
-            this.rad_rec_normal.Size = new System.Drawing.Size(60, 17);
-            this.rad_rec_normal.TabIndex = 3;
-            this.rad_rec_normal.TabStop = true;
-            this.rad_rec_normal.Text = "Record";
-            this.rad_rec_normal.UseVisualStyleBackColor = true;
-            this.rad_rec_normal.CheckedChanged += new System.EventHandler(this.rad_rec_normal_CheckedChanged);
-            // 
-            // rad_rec_OnMotion
-            // 
-            this.rad_rec_OnMotion.AutoSize = true;
-            this.rad_rec_OnMotion.Enabled = false;
-            this.rad_rec_OnMotion.Location = new System.Drawing.Point(6, 110);
-            this.rad_rec_OnMotion.Name = "rad_rec_OnMotion";
-            this.rad_rec_OnMotion.Size = new System.Drawing.Size(156, 17);
-            this.rad_rec_OnMotion.TabIndex = 2;
-            this.rad_rec_OnMotion.TabStop = true;
-            this.rad_rec_OnMotion.Text = "Record on motion detection";
-            this.rad_rec_OnMotion.UseVisualStyleBackColor = true;
-            this.rad_rec_OnMotion.CheckedChanged += new System.EventHandler(this.rad_rec_OnMotion_CheckedChanged);
-            // 
-            // rad_motion
-            // 
-            this.rad_motion.AutoSize = true;
-            this.rad_motion.Enabled = false;
-            this.rad_motion.Location = new System.Drawing.Point(6, 64);
-            this.rad_motion.Name = "rad_motion";
-            this.rad_motion.Size = new System.Drawing.Size(91, 17);
-            this.rad_motion.TabIndex = 1;
-            this.rad_motion.TabStop = true;
-            this.rad_motion.Text = "Detect motion";
-            this.rad_motion.UseVisualStyleBackColor = true;
-            this.rad_motion.CheckedChanged += new System.EventHandler(this.rad_motion_CheckedChanged);
-            // 
-            // rad_normal
-            // 
-            this.rad_normal.AutoSize = true;
-            this.rad_normal.Checked = true;
-            this.rad_normal.Enabled = false;
-            this.rad_normal.Location = new System.Drawing.Point(7, 19);
-            this.rad_normal.Name = "rad_normal";
-            this.rad_normal.Size = new System.Drawing.Size(80, 17);
-            this.rad_normal.TabIndex = 0;
-            this.rad_normal.TabStop = true;
-            this.rad_normal.Text = "Stream only";
-            this.rad_normal.UseMnemonic = false;
-            this.rad_normal.UseVisualStyleBackColor = true;
-            this.rad_normal.CheckedChanged += new System.EventHandler(this.rad_normal_CheckedChanged);
             // 
             // label_Motion
             // 
@@ -237,17 +164,15 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.cb_mobileAlert);
-            this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.lbl_endpoint);
             this.groupBox3.Controls.Add(this.lbl_hint);
-            this.groupBox3.Controls.Add(this.ConnectedClientsList);
             this.groupBox3.Controls.Add(this.lblState);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.buttonStopServer);
             this.groupBox3.Controls.Add(this.buttonStartServer);
             this.groupBox3.Location = new System.Drawing.Point(418, 192);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(352, 149);
+            this.groupBox3.Size = new System.Drawing.Size(352, 196);
             this.groupBox3.TabIndex = 7;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Streaming";
@@ -256,23 +181,13 @@
             // 
             this.cb_mobileAlert.AutoSize = true;
             this.cb_mobileAlert.Enabled = false;
-            this.cb_mobileAlert.Location = new System.Drawing.Point(179, 120);
+            this.cb_mobileAlert.Location = new System.Drawing.Point(10, 144);
             this.cb_mobileAlert.Name = "cb_mobileAlert";
             this.cb_mobileAlert.Size = new System.Drawing.Size(80, 17);
             this.cb_mobileAlert.TabIndex = 15;
             this.cb_mobileAlert.Text = "Mobile alert";
             this.cb_mobileAlert.UseVisualStyleBackColor = true;
             this.cb_mobileAlert.CheckedChanged += new System.EventHandler(this.cb_mobileAlert_CheckedChanged);
-            // 
-            // label2
-            // 
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(176, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(150, 17);
-            this.label2.TabIndex = 14;
-            this.label2.Text = "Connected Clients";
-            this.label2.Visible = false;
             // 
             // lbl_endpoint
             // 
@@ -292,15 +207,6 @@
             this.lbl_hint.Size = new System.Drawing.Size(166, 55);
             this.lbl_hint.TabIndex = 12;
             this.lbl_hint.Visible = false;
-            // 
-            // ConnectedClientsList
-            // 
-            this.ConnectedClientsList.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.ConnectedClientsList.FormattingEnabled = true;
-            this.ConnectedClientsList.Location = new System.Drawing.Point(179, 33);
-            this.ConnectedClientsList.Name = "ConnectedClientsList";
-            this.ConnectedClientsList.Size = new System.Drawing.Size(165, 69);
-            this.ConnectedClientsList.TabIndex = 5;
             // 
             // lblState
             // 
@@ -322,7 +228,7 @@
             // buttonStopServer
             // 
             this.buttonStopServer.Enabled = false;
-            this.buttonStopServer.Location = new System.Drawing.Point(88, 120);
+            this.buttonStopServer.Location = new System.Drawing.Point(88, 167);
             this.buttonStopServer.Name = "buttonStopServer";
             this.buttonStopServer.Size = new System.Drawing.Size(75, 23);
             this.buttonStopServer.TabIndex = 5;
@@ -333,13 +239,47 @@
             // buttonStartServer
             // 
             this.buttonStartServer.Enabled = false;
-            this.buttonStartServer.Location = new System.Drawing.Point(7, 120);
+            this.buttonStartServer.Location = new System.Drawing.Point(7, 167);
             this.buttonStartServer.Name = "buttonStartServer";
             this.buttonStartServer.Size = new System.Drawing.Size(75, 23);
             this.buttonStartServer.TabIndex = 4;
             this.buttonStartServer.Text = "Start";
             this.buttonStartServer.UseVisualStyleBackColor = true;
             this.buttonStartServer.Click += new System.EventHandler(this.buttonStartServer_Click);
+            // 
+            // detectMotion
+            // 
+            this.detectMotion.AutoSize = true;
+            this.detectMotion.Enabled = false;
+            this.detectMotion.Location = new System.Drawing.Point(10, 44);
+            this.detectMotion.Name = "detectMotion";
+            this.detectMotion.Size = new System.Drawing.Size(100, 17);
+            this.detectMotion.TabIndex = 16;
+            this.detectMotion.Text = "Motion detector";
+            this.detectMotion.UseVisualStyleBackColor = true;
+            this.detectMotion.CheckedChanged += new System.EventHandler(this.detectMotion_CheckedChanged);
+            // 
+            // Start_Recording
+            // 
+            this.Start_Recording.Enabled = false;
+            this.Start_Recording.Location = new System.Drawing.Point(10, 111);
+            this.Start_Recording.Name = "Start_Recording";
+            this.Start_Recording.Size = new System.Drawing.Size(94, 23);
+            this.Start_Recording.TabIndex = 17;
+            this.Start_Recording.Text = "Start recording";
+            this.Start_Recording.UseVisualStyleBackColor = true;
+            this.Start_Recording.Click += new System.EventHandler(this.Start_Recording_Click);
+            // 
+            // Stop_Recording
+            // 
+            this.Stop_Recording.Enabled = false;
+            this.Stop_Recording.Location = new System.Drawing.Point(110, 111);
+            this.Stop_Recording.Name = "Stop_Recording";
+            this.Stop_Recording.Size = new System.Drawing.Size(94, 23);
+            this.Stop_Recording.TabIndex = 18;
+            this.Stop_Recording.Text = "Stop recording";
+            this.Stop_Recording.UseVisualStyleBackColor = true;
+            this.Stop_Recording.Click += new System.EventHandler(this.Stop_Recording_Click);
             // 
             // MotionForm
             // 
@@ -377,20 +317,16 @@
         private Ozeki.Media.VideoViewerWF videoViewerWF1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label_Motion;
-        private System.Windows.Forms.RadioButton rad_rec_OnMotion;
-        private System.Windows.Forms.RadioButton rad_motion;
-        private System.Windows.Forms.RadioButton rad_normal;
-        private System.Windows.Forms.RadioButton rad_rec_normal;
-        private System.Windows.Forms.RadioButton rad_rec_AndDet_motion;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button buttonStopServer;
         private System.Windows.Forms.Button buttonStartServer;
         private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ListBox ConnectedClientsList;
         private System.Windows.Forms.Label lbl_hint;
         private System.Windows.Forms.Label lbl_endpoint;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox cb_mobileAlert;
+        private System.Windows.Forms.Button Stop_Recording;
+        private System.Windows.Forms.Button Start_Recording;
+        private System.Windows.Forms.CheckBox detectMotion;
     }
 }

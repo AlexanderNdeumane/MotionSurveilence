@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MotionForm));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.buttonDisconnect = new System.Windows.Forms.Button();
             this.buttonConnect = new System.Windows.Forms.Button();
@@ -38,6 +39,9 @@
             this.labelState = new System.Windows.Forms.Label();
             this.videoViewerWF1 = new Ozeki.Media.VideoViewerWF();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Stop_Recording = new System.Windows.Forms.Button();
+            this.Start_Recording = new System.Windows.Forms.Button();
+            this.detectMotion = new System.Windows.Forms.CheckBox();
             this.label_Motion = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cb_mobileAlert = new System.Windows.Forms.CheckBox();
@@ -47,9 +51,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.buttonStopServer = new System.Windows.Forms.Button();
             this.buttonStartServer = new System.Windows.Forms.Button();
-            this.detectMotion = new System.Windows.Forms.CheckBox();
-            this.Start_Recording = new System.Windows.Forms.Button();
-            this.Stop_Recording = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -154,6 +155,40 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Controllers";
             // 
+            // Stop_Recording
+            // 
+            this.Stop_Recording.Enabled = false;
+            this.Stop_Recording.Location = new System.Drawing.Point(110, 111);
+            this.Stop_Recording.Name = "Stop_Recording";
+            this.Stop_Recording.Size = new System.Drawing.Size(94, 23);
+            this.Stop_Recording.TabIndex = 18;
+            this.Stop_Recording.Text = "Stop recording";
+            this.Stop_Recording.UseVisualStyleBackColor = true;
+            this.Stop_Recording.Click += new System.EventHandler(this.Stop_Recording_Click);
+            // 
+            // Start_Recording
+            // 
+            this.Start_Recording.Enabled = false;
+            this.Start_Recording.Location = new System.Drawing.Point(10, 111);
+            this.Start_Recording.Name = "Start_Recording";
+            this.Start_Recording.Size = new System.Drawing.Size(94, 23);
+            this.Start_Recording.TabIndex = 17;
+            this.Start_Recording.Text = "Start recording";
+            this.Start_Recording.UseVisualStyleBackColor = true;
+            this.Start_Recording.Click += new System.EventHandler(this.Start_Recording_Click);
+            // 
+            // detectMotion
+            // 
+            this.detectMotion.AutoSize = true;
+            this.detectMotion.Enabled = false;
+            this.detectMotion.Location = new System.Drawing.Point(10, 44);
+            this.detectMotion.Name = "detectMotion";
+            this.detectMotion.Size = new System.Drawing.Size(100, 17);
+            this.detectMotion.TabIndex = 16;
+            this.detectMotion.Text = "Motion detector";
+            this.detectMotion.UseVisualStyleBackColor = true;
+            this.detectMotion.CheckedChanged += new System.EventHandler(this.detectMotion_CheckedChanged);
+            // 
             // label_Motion
             // 
             this.label_Motion.Location = new System.Drawing.Point(415, 165);
@@ -247,40 +282,6 @@
             this.buttonStartServer.UseVisualStyleBackColor = true;
             this.buttonStartServer.Click += new System.EventHandler(this.buttonStartServer_Click);
             // 
-            // detectMotion
-            // 
-            this.detectMotion.AutoSize = true;
-            this.detectMotion.Enabled = false;
-            this.detectMotion.Location = new System.Drawing.Point(10, 44);
-            this.detectMotion.Name = "detectMotion";
-            this.detectMotion.Size = new System.Drawing.Size(100, 17);
-            this.detectMotion.TabIndex = 16;
-            this.detectMotion.Text = "Motion detector";
-            this.detectMotion.UseVisualStyleBackColor = true;
-            this.detectMotion.CheckedChanged += new System.EventHandler(this.detectMotion_CheckedChanged);
-            // 
-            // Start_Recording
-            // 
-            this.Start_Recording.Enabled = false;
-            this.Start_Recording.Location = new System.Drawing.Point(10, 111);
-            this.Start_Recording.Name = "Start_Recording";
-            this.Start_Recording.Size = new System.Drawing.Size(94, 23);
-            this.Start_Recording.TabIndex = 17;
-            this.Start_Recording.Text = "Start recording";
-            this.Start_Recording.UseVisualStyleBackColor = true;
-            this.Start_Recording.Click += new System.EventHandler(this.Start_Recording_Click);
-            // 
-            // Stop_Recording
-            // 
-            this.Stop_Recording.Enabled = false;
-            this.Stop_Recording.Location = new System.Drawing.Point(110, 111);
-            this.Stop_Recording.Name = "Stop_Recording";
-            this.Stop_Recording.Size = new System.Drawing.Size(94, 23);
-            this.Stop_Recording.TabIndex = 18;
-            this.Stop_Recording.Text = "Stop recording";
-            this.Stop_Recording.UseVisualStyleBackColor = true;
-            this.Stop_Recording.Click += new System.EventHandler(this.Stop_Recording_Click);
-            // 
             // MotionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -292,8 +293,9 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.videoViewerWF1);
             this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MotionForm";
-            this.Text = "MotionForm";
+            this.Text = "Motion Surveillance";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);

@@ -62,7 +62,7 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>motionSurveillance-01-01.ico</ApplicationIcon>
+    <ApplicationIcon>motionSurveillance-01.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MQTTnet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -134,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="motionSurveillance-01-01.ico" />
+    <Content Include="motionSurveillance-01.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

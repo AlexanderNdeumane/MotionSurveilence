@@ -10,6 +10,7 @@ using MQTTnet;
 using MQTTnet.Client.Options;
 using System.Threading;
 using MQTTnet.Client;
+using System.IO;
 
 namespace MotionSurveilence
 {
@@ -383,7 +384,11 @@ namespace MotionSurveilence
             var date = DateTime.Now.Year + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" +
                         DateTime.Now.Hour + "-" + DateTime.Now.Minute + "-" + DateTime.Now.Second;
 
-            var currentpath = AppDomain.CurrentDomain.BaseDirectory + date + ".mpeg4";
+            var currentpath = @"Recordings\" + date + ".mpeg4";
+            if (!Directory.Exists("Recordings"))
+            {
+                System.IO.Directory.CreateDirectory("Recordings");
+            }
 
             _recorder = new MPEG4Recorder(currentpath);
             _recorder.MultiplexFinished += _recorder_MultiplexFinished;
